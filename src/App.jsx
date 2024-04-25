@@ -1,7 +1,7 @@
 import './App.css'
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Header, Sidebar, LoginForm, SignupForm, Users } from './Components/index'
-import { EmptyPage, HomePage } from './pages/index'
+import { EmptyPage, HomePage, VideoListingPageViewCard } from './pages/index'
 
 
 const appRouter = createBrowserRouter([{
@@ -11,6 +11,10 @@ const appRouter = createBrowserRouter([{
     {
       path: "/",
       element: <EmptyPage />,
+    },
+    {
+      path: "/videos",
+      element: <VideoListingPageViewCard />
     },
     {
       path: "/signup",

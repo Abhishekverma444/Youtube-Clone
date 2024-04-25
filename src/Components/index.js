@@ -5,6 +5,7 @@ import SignupForm from './Authentication/SignupForm.jsx';
 import LoginForm from './Authentication/LoginForm.jsx';
 import Users from "./Users/Users.jsx";
 import FlashMessage from './FlashMessage'
+import VideoCard from "./VideoCard.jsx";
 
 
 export {
@@ -15,4 +16,6 @@ export {
     LoginForm,
     Users,
     FlashMessage,
+    VideoCard,
+    
 }

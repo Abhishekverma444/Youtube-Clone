@@ -3,6 +3,7 @@ import { setFlashMessage } from "../store/flashMsgSlice";
 import { useDispatch } from "react-redux";
 import { FlashMessage } from "../Components";
 import { useSelector } from "react-redux";
+import { API_URL } from "../utils/constants";
 
 const EmptyPage = () => {
 
@@ -13,7 +14,7 @@ const EmptyPage = () => {
 
   const dispatch = useDispatch()
   const handleClick = async () => {
-    const response = await fetch("http://localhost:8000/api/v1/users/current-user", {
+    const response = await fetch(API_URL+"/users/current-user", {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${accessToken}`

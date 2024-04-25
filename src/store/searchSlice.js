@@ -9,9 +9,12 @@ const searchSlice = createSlice({
         cacheResults: (state, action) => {
             state = Object.assign(state,action.payload); 
         },
+        getSearchQuery: (state, action) => {
+            state = Object.assign(state,action.payload); 
+        }
     },
 })
 
-export const {cacheResults} = searchSlice.actions;
+export const {cacheResults, getSearchQuery} = searchSlice.actions;
 
 export default searchSlice.reducer;

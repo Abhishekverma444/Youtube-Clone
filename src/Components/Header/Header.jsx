@@ -43,7 +43,7 @@ const Header = () => {
         setSuggestions(json[1]);
         dispatch(
             cacheResults({
-                ['search']: json[1],
+                ['searchCache']: json[1],
             })
         )
     }
@@ -68,6 +68,13 @@ const Header = () => {
     }
 
 
+    const handleSearchClick = () => {
+        dispatch(
+            cacheResults({
+                ['searchQuery']: searchQuery,
+            })
+        )
+    }
 
     return (
         <div className=' bg bg-[#FFD700] flex justify-between p-4 fixed top-0 left-0 w-full z-20'
@@ -100,7 +107,8 @@ const Header = () => {
                         onFocus={() => setShowSuggestions(true)}
                         onBlur={handleInputBlur}
                     />
-                    <Button className='bg-white w-fit cursor-pointer rounded-r-full h-12 place-content-center' bgColor='bg-white'>
+                    <Button className='bg-white w-fit cursor-pointer rounded-r-full h-12 place-content-center' bgColor='bg-white'
+                        onClick={handleSearchClick}>
                         <img className='h-7 px-5' src={searchIcon} alt="Search" />
                     </Button>
                 </div>

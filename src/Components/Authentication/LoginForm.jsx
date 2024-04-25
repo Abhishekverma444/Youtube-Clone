@@ -4,13 +4,14 @@ import axios from "axios";
 import { useState } from "react";
 import { setFlashMessage } from "../../store/flashMsgSlice";
 import { useDispatch } from "react-redux";
+import { API_URL } from '../../utils/constants'
 
 const LoginForm = () => {
     const { handleSubmit, register } = useForm();
     const [isLoading, setIsLoading] = useState(false); // Track loading state
 
     const onSubmit = (data) => {
-        // console.log(data);
+        console.log(data);
         setIsLoading(true); // Start loading
         loginFrom(data)
     };
@@ -24,7 +25,7 @@ const LoginForm = () => {
     const dispatch = useDispatch()
     const loginFrom = async (formData) => {
         try {
-            const response = await axios.post('http://localhost:8000/api/v1/users/login', formData, {
+            const response = await axios.post(API_URL+'/users/login', formData, {
                 withCredentials: true
             });
             console.log(response);
