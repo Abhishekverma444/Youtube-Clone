@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from 'axios'
+import { API_URL } from '../utils/constants'
 
 const initialState = {
     videos: [],
@@ -15,11 +16,18 @@ const initialState = {
 
 // Define an async thunk to fetch videos
 export const fetchVideos = createAsyncThunk('videos/fetchVideos', async (params) => {
+    const accessToken = localStorage.getItem('accessToken')
     const { sortBy, sortType, query, userId, page, limit } = params;
-    const url = `{{server}}/videos?sortBy=${sortBy}&sortType=${sortType}&query=${query}&useId=${userId}&page=${page}&limit=${limit}`;
+    const url = API_URL + `/videos?sortBy=${sortBy}&sortType=${sortType}&query=${query}&useId=${userId}&page=${page}&limit=${limit}`;
     try {
-        const response = await axios.get(url);
-        return response.data;
+        const response = await axios.get(url,
+            {
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`
+                }
+            });
+            // console.log(response);
+        return response.data.data;
     } catch (error) {
         throw new Error('Failed to fetch videos');
     }
@@ -49,19 +57,28 @@ const videoSlice = createSlice({
             state.limit = action.payload;
         },
     },
-    extraReducers: {
-        [fetchVideos.pending]: (state) => {
-          state.status = 'loading';
-        },
-        [fetchVideos.fulfilled]: (state, action) => {
-          state.status = 'succeeded';
-          state.videos = action.payload;
-        },
-        [fetchVideos.rejected]: (state, action) => {
-          state.status = 'failed';
-          state.error = action.error.message;
-        },
-      },
+    extraReducers(builder) {
+        builder
+            .addCase(fetchVideos.pending, (state) => {
+                state.status = 'loading';
+            })
+            .addCase(fetchVideos.fulfilled, (state, action) => {
+                state.status = 'succeeded';
+                // state.videos = action.payload;
+                // Append the fetched videos to the existing videos array
+                state.videos = [...state.videos, ...action.payload];
+
+                // If videos array exceeds a certain limit, remove the oldest videos
+                const maxVideos = 6; // Define your maximum number of videos here
+                if (state.videos.length > maxVideos) {
+                    state.videos = state.videos.slice(state.videos.length - maxVideos);
+                }
+            })
+            .addCase(fetchVideos.rejected, (state, action) => {
+                state.status = 'failed';
+                state.error = action.error.message;
+            });
+    },
 });
 
 export const {
