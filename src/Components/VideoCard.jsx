@@ -2,8 +2,8 @@ import React from 'react';
 
 const VideoCard = ({video}) => {
       const { thumbnail, title = 'title', views = 0, createdAt, channelName, duration, channelImage } = video;
-        // let {_id} = video;
-      console.log(video);
+        
+    //   console.log(video);
 
     return (
         <div className="max-w-md p-2 bg-[#fdde2e] cursor-pointer shadow-lg rounded-lg overflow-hidden mx-2 my-4 hover:rounded-none select-none" >
