@@ -3,7 +3,7 @@ import axios from 'axios'
 import { API_URL } from '../utils/constants'
 
 const initialState = {
-    videos: [],
+    videoRes: [],
     sortBy: 'descDur',
     sortType: 'all',
     query: '',
@@ -17,8 +17,10 @@ const initialState = {
 // Define an async thunk to fetch videos
 export const fetchVideos = createAsyncThunk('videos/fetchVideos', async (params) => {
     const accessToken = localStorage.getItem('accessToken')
+    // console.log(accessToken);
     const { sortBy, sortType, query, userId, page, limit } = params;
-    const url = API_URL + `/videos?sortBy=${sortBy}&sortType=${sortType}&query=${query}&useId=${userId}&page=${page}&limit=${limit}`;
+    const url = API_URL + `/videos?sortBy=${sortBy}&sortType=${sortType}&query=${query}&userId=${userId}&page=${page}&limit=${limit}`;
+    // console.log("query", query);
     try {
         const response = await axios.get(url,
             {
@@ -26,7 +28,7 @@ export const fetchVideos = createAsyncThunk('videos/fetchVideos', async (params)
                     'Authorization': `Bearer ${accessToken}`
                 }
             });
-            // console.log(response);
+        // console.log(response);
         return response.data.data;
     } catch (error) {
         throw new Error('Failed to fetch videos');
@@ -46,6 +48,7 @@ const videoSlice = createSlice({
         },
         updateQuery(state, action) {
             state.query = action.payload;
+            state.videoRes = [];
         },
         updateUserId(state, action) {
             state.userId = action.payload;
@@ -64,14 +67,21 @@ const videoSlice = createSlice({
             })
             .addCase(fetchVideos.fulfilled, (state, action) => {
                 state.status = 'succeeded';
-                // state.videos = action.payload;
-                // Append the fetched videos to the existing videos array
-                state.videos = [...state.videos, ...action.payload];
+                // console.log("action.payload", action.payload);
+                if (action.payload.length === 0) {
+                    // Clear videos array if fetched result is empty and query has changed
+                    if (state.query !== '') {
+                        state.videoRes = [];
+                    }
+                } else {
+                    // Append the fetched videos to the existing videos array
+                    state.videoRes = [...state.videoRes, ...action.payload];
 
-                // If videos array exceeds a certain limit, remove the oldest videos
-                const maxVideos = 6; // Define your maximum number of videos here
-                if (state.videos.length > maxVideos) {
-                    state.videos = state.videos.slice(state.videos.length - maxVideos);
+                    // If videos array exceeds a certain limit, remove the oldest videos
+                    const maxVideos = 3; // Define your maximum number of videos here
+                    if (state.videoRes.length > maxVideos) {
+                        state.videoRes = state.videoRes.slice(state.videoRes.length - maxVideos);
+                    }
                 }
             })
             .addCase(fetchVideos.rejected, (state, action) => {
@@ -88,6 +98,7 @@ export const {
     updateUserId,
     updatePage,
     updateLimit,
+    updateVideos
 } = videoSlice.actions;
 
 export default videoSlice.reducer;

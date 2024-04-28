@@ -11,7 +11,7 @@ const HomePage = () => {
   
   const flashMsg = useSelector((store)=> store.message);
 
-  console.log(flashMsg);
+  // console.log(flashMsg);
 
   useEffect(()=>{
     setTimeout(() => {

@@ -1,7 +1,7 @@
 import './App.css'
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Header, Sidebar, LoginForm, SignupForm, Users } from './Components/index'
-import { EmptyPage, HomePage, VideoListingPageViewCard } from './pages/index'
+import { EmptyPage, HomePage, VideoListingPage, VideoDetailsPage } from './pages/index'
 
 
 const appRouter = createBrowserRouter([{
@@ -10,11 +10,11 @@ const appRouter = createBrowserRouter([{
   children: [
     {
       path: "/",
-      element: <EmptyPage />,
+      element: <VideoListingPage />,
     },
     {
-      path: "/videos",
-      element: <VideoListingPageViewCard />
+      path: "/videos/:videoId",
+      element: <VideoDetailsPage />,
     },
     {
       path: "/signup",

@@ -21,7 +21,7 @@ const EmptyPage = () => {
       }
     });
     const data = await response.json();
-    console.log(data)
+    // console.log(data)
 
     dispatch(
       setFlashMessage({
@@ -40,7 +40,7 @@ const EmptyPage = () => {
 
 
   return (
-    <div className="flex flex-col w-full ml-[6%]  mt-12 items-center bg-yellow-300 justify-center h-screen">
+    <div className="flex flex-col w-[94%] ml-[6%]  mt-12 items-center bg-yellow-300 justify-center h-full">
       <div className="bg-yellow-400 p-5 rounded-full">
         <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-gray-800" viewBox="0 0 20 20" fill="currentColor">
           <path fillRule="evenodd" d="M3.5 4A1.5 1.5 0 0 0 2 5.5v9A1.5 1.5 0 0 0 3.5 16h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 16.5 4h-13zM2 3a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h13a2 2 0 0 0 2-2v-9a2 2 0 0 0-2-2H2z" />

@@ -1,9 +1,11 @@
 import EmptyPage from "./EmptyPage";
 import HomePage from "./HomePage";
-import VideoListingPageViewCard from "./VideoListingPageViewCard";
+import VideoListingPage from "./VideoListingPage";
+import VideoDetailsPage from "./VideoDetailsPage";
 
 export {
     EmptyPage,
     HomePage,
-    VideoListingPageViewCard
+    VideoListingPage,
+    VideoDetailsPage
 }

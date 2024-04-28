@@ -6,7 +6,7 @@ import LoginForm from './Authentication/LoginForm.jsx';
 import Users from "./Users/Users.jsx";
 import FlashMessage from './FlashMessage'
 import VideoCard from "./VideoCard.jsx";
-
+import VideoList from "./VideoList.jsx";
 
 export {
     Button,
@@ -17,5 +17,5 @@ export {
     Users,
     FlashMessage,
     VideoCard,
-    
+    VideoList,
 }

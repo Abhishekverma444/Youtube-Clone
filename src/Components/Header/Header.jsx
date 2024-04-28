@@ -99,7 +99,7 @@ const Header = () => {
 
                 <div className='flex items-center mb-1'>
                     <input
-                        className='h-12 px-4 w-96 font-semibold text-gray-700 rounded-l-full outline-1 outline-blue-700'
+                        className='h-12 px-4 w-96 font-semibold text-gray-700 rounded-l-full mt-2 outline-1 outline-blue-700'
                         type="text"
                         placeholder='Search'
                         value={searchQuery}
@@ -107,7 +107,7 @@ const Header = () => {
                         onFocus={() => setShowSuggestions(true)}
                         onBlur={handleInputBlur}
                     />
-                    <Button className='bg-white w-fit cursor-pointer rounded-r-full h-12 place-content-center' bgColor='bg-white'
+                    <Button className='bg-white w-fit cursor-pointer rounded-r-full h-12 place-content-center mt-2' bgColor='bg-white'
                         onClick={handleSearchClick}>
                         <img className='h-7 px-5' src={searchIcon} alt="Search" />
                     </Button>
