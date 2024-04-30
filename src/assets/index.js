@@ -9,7 +9,7 @@ import settings from './settings.png'
 import subscriber from './subscriber.png'
 import vid_rec from './vid_rec.png'
 import home from './home.png'
-
+import dislike from './dislike.png'
 
 export {
     user,
@@ -22,5 +22,6 @@ export {
     settings,
     subscriber,
     vid_rec,
-    home
+    home,
+    dislike
 }

@@ -98,7 +98,6 @@ export const {
     updateUserId,
     updatePage,
     updateLimit,
-    updateVideos
 } = videoSlice.actions;
 
 export default videoSlice.reducer;

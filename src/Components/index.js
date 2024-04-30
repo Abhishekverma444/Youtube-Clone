@@ -7,6 +7,8 @@ import Users from "./Users/Users.jsx";
 import FlashMessage from './FlashMessage'
 import VideoCard from "./VideoCard.jsx";
 import VideoList from "./VideoList.jsx";
+import VideoDescription from "./VideoDescription.jsx";
+import AddToPlaylist from "./AddToPlaylist.jsx";
 
 export {
     Button,
@@ -18,4 +20,6 @@ export {
     FlashMessage,
     VideoCard,
     VideoList,
+    VideoDescription,
+    AddToPlaylist,
 }

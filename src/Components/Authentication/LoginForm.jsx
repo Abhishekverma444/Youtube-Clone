@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useState } from "react";
 import { setFlashMessage } from "../../store/flashMsgSlice";
+import { setUserData } from '../../store/userSlice'
 import { useDispatch } from "react-redux";
 import { API_URL } from '../../utils/constants'
 
@@ -28,11 +29,16 @@ const LoginForm = () => {
             const response = await axios.post(API_URL+'/users/login', formData, {
                 withCredentials: true
             });
-            console.log(response);
+            // console.log(response);
             console.log('Success:', response.data);
             localStorage.setItem('accessToken', response.data.data.accessToken)
             localStorage.setItem('refreshToken', response.data.data.refreshToken)
 
+            dispatch(
+                setUserData({
+                    ['userData']: response.data.data.user,
+                })
+            )
             dispatch(
                 setFlashMessage({
                     ['message']: response.data.message,

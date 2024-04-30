@@ -73,7 +73,7 @@ const VideoList = ({ video, isSmallList }) => {
         <div>
           <h3 className={`text-gray-800 text-xl mb-1 font-bold  my-1`}>{title}</h3>
           <span className="text-gray-600 text-sm font-semibold pr-1">{formatViews(views)} views</span>
-          <span className="text-gray-600 text-sm font-semibold">   {published} ago</span>
+          <span className="text-gray-600 text-sm font-semibold"> • {published} ago</span>
         </div>
 
         <div className="flex items-center mt-2" >

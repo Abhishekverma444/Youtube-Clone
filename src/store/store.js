@@ -3,6 +3,8 @@ import searchSlice from './searchSlice'
 import toggleSlice from './toggleSlice'
 import flashMsgSlice from "./flashMsgSlice";
 import videoSlice from './videoSlice'
+import userSlice from "./userSlice";
+import playlistSlice from "./playlistSlice";
 
 const store = configureStore({
     reducer: {
@@ -10,6 +12,8 @@ const store = configureStore({
         toggle: toggleSlice,
         message: flashMsgSlice,
         videos: videoSlice,
+        user: userSlice,
+        playlist: playlistSlice,
     }
 })
 
