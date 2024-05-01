@@ -15,9 +15,10 @@ const VideoDescription = ({ video }) => {
     const [state, setState] = useState(false)
     const [clickToLike, setClickToLike] = useState(false)
     const [clickToDislike, setClickToDislike] = useState(false)
+    const [showPlaylist, setShowPlaylist] = useState(false)
     const accessToken = localStorage.getItem('accessToken')
-
-    const user = useSelector((state)=> state.user);
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    
   
     
     const formattedDate = dateFormat(video?.createdAt, 'mmmm dd, yyyy');
@@ -51,7 +52,7 @@ const VideoDescription = ({ video }) => {
                     setSubscribers([])
                 }
                 if(response.data.data){
-                    const isSubscriber = response.data.data.filter((subscriber)=>subscriber.userId === user.userData._id)[0]
+                    const isSubscriber = response.data.data.filter((subscriber)=>subscriber.userId === userData._id)[0]
                     if(isSubscriber){
                         setIsSubscribed(true)
                     }
@@ -86,16 +87,18 @@ const VideoDescription = ({ video }) => {
     }
 
     const handleSubscription = async() => {
-        const response = await axios.post(API_URL+`/subscriptions/c/${user.userData._id}`, {}, {
+        const response = await axios.post(API_URL+`/subscriptions/c/${userData._id}`, {}, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`
             }
         }); 
-        // console.log(response.data.data);
+        console.log(response.data.data);
         setIsSubscribed(response.data.data)
     };
 
-
+    const handleSaveToPlaylist = () => {
+        setShowPlaylist(!showPlaylist)
+    }
 
 
 
@@ -131,11 +134,11 @@ const VideoDescription = ({ video }) => {
                     </button>
                 </div>
                 <div className='flex justify-end'>
-                <button className="flex bg-white items-center text-gray-700 border-2 hover:border-gray-400 rounded-lg px-4 py-2 font-semibold">
+                <button onClick={handleSaveToPlaylist} className="flex bg-white items-center text-gray-700 border-2 hover:border-gray-400 rounded-lg px-4 py-2 font-semibold">
                     <img src={folder} alt="" className="h-6 w-6" />
                     Save
                 </button>
-                <AddToPlaylist/>
+                <AddToPlaylist showPlaylist={showPlaylist} />
                 </div>
             </div>
 
@@ -148,16 +151,15 @@ const VideoDescription = ({ video }) => {
                 </div>
 
                 <motion.button
-                    className={`ml-auto flex items-center px-3 py-2 text-gray-800 font-medium  shadow-inner  ${isSubscribed ? 'bg-green-500' : 'bg-purple-400'
-                        }`}
+                    className={`ml-auto flex  items-center px-3 py-2 text-gray-800 font-medium  shadow-inner  ${isSubscribed ? 'bg-green-500' : 'bg-purple-400'}`}
                     onClick={handleSubscription}
                     whileTap={{ scale: 0.9 }}
                     whileHover={{ scale: 1.05 }}
                     animate={{ rotate: isSubscribed ? 360 : 0 }}
                     transition={{ duration: 0.8, ease: 'easeInOut' }}
                 >
-                    <img src={subscriber} alt="" className="h-5 w-5 mr-1" />
-                    {isSubscribed ? 'Unsubscribe' : 'Subscribe'}
+                    <img src={subscriber} alt="subscribe logo" className="h-5 w-5 mr-1" />
+                    {isSubscribed ? 'Unsubscribe':'Subscribe'}
                 </motion.button>
             </div>
 

@@ -1,65 +1,70 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form'
+import { useSelector, useDispatch } from 'react-redux';
+import { createPlaylist, fetchUserPlaylists } from '../store/playlistSlice'
+import { setFlashMessage } from '../store/flashMsgSlice';
 
-const AddToPlaylist = ({ onCreatePlaylist }) => {
+const AddToPlaylist = ({ onCreatePlaylist, showPlaylist }) => {
   const [playlistName, setPlaylistName] = useState('');
+  const {register, handleSubmit} = useForm();
+  const { status, createdPlaylist, userPlaylists } = useSelector((state) => state.playlist)
+  const userData = JSON.parse(localStorage.getItem('userData'));
+  const [selectedPlaylistIds, setSelectedPlaylistIds] = useState([]);
 
-  const handleInputChange = (e) => {
-    setPlaylistName(e.target.value);
-  };
+  // console.log(userPlaylists);
+  // console.log(userData._id);
+  
+  const dispatch = useDispatch();
+  
+  useEffect(()=>{
+    dispatch(fetchUserPlaylists(userData._id))
+    console.log('userPlaylists', userPlaylists);
+  },[dispatch])
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (playlistName.trim() === '') {
-      alert('Please enter a playlist name.');
-      return;
+  const onSubmit = (data) => {
+    dispatch(createPlaylist(data)) 
+    dispatch(setFlashMessage({"message": createdPlaylist.name + ' playlist created successfully'}))
+  }
+  
+
+
+  const handleCheckboxChange = (playlistId) => {
+    if(selectedPlaylistIds.includes(playlistId)){
+      setSelectedPlaylistIds((prevIds) => prevIds.filter((id) => id !== playlistId))
+    } else {
+      setSelectedPlaylistIds((prevIds) => [...prevIds, playlistId])
     }
-    onCreatePlaylist(playlistName);
-    setPlaylistName('');
   };
 
-
-  const [collections, setCollections] = useState([
-    { name: 'JavaScript Basics', checked: false },
-    { name: 'C++ Tuts', checked: false },
-    { name: 'Feel Good Music', checked: false },
-    { name: 'Ed Sheeran', checked: false },
-    { name: 'Python', checked: false }
-  ]);
-
-  const handleCheckboxChange = (index) => {
-    const updatedCollections = [...collections];
-    updatedCollections[index].checked = !updatedCollections[index].checked;
-    setCollections(updatedCollections);
-  };
-
-  return (
-    <div className="max-w-md absolute mx-auto mt-12 border-2 border-[#c5ad14] p-6 bg-[#f0d318] shadow-md rounded-md">
+ 
+  return showPlaylist && (
+    <div className="max-w-md absolute overflow-visible z-30 mx-auto mt-12 border-2 border-[#c5ad14] p-6 bg-[#f0d318] shadow-md rounded-md">
       <h2 className="text-lg font-semibold mb-4">Save to playlist</h2>
 
       <div className="max-w-md mx-auto ">
-      {collections.map((collection, index) => (
-        <div key={index} className="flex items-center mb-3">
+      {userPlaylists && userPlaylists.map((playlist) => (
+        <div key={playlist._id} className="flex items-center mb-3">
           <input
             type="checkbox"
-            id={`collection-${index}`}
+            id={`playlist-${playlist._id}`}
             className="mr-3 h-5 w-5 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-            checked={collection.checked}
-            onChange={() => handleCheckboxChange(index)}
+            checked={selectedPlaylistIds.includes(playlist._id)}
+            onChange={() => handleCheckboxChange(playlist._id)}
           />
           <label
-            htmlFor={`collection-${index}`}
-            className={`text-lg ${collection.checked ? 'text-indigo-800' : 'text-gray-800'} cursor-pointer`}
-            onClick={() => handleCheckboxChange(index)}
+            htmlFor={`playlist-${playlist._id}`}
+            className={`text-lg ${selectedPlaylistIds.includes(playlist._id) ? 'text-indigo-800 font-semibold' : 'text-gray-800'} cursor-pointer`}
+            onClick={() => handleCheckboxChange(playlist._id)}
           >
-            {collection.name}
+            {playlist.name}
           </label>
         </div>
       ))}
     </div>
 
-      <form onSubmit={handleSubmit} className='text-center'>
+      <form onSubmit={handleSubmit(onSubmit)} className='text-center'>
         <div className="mb-4">
-          <label htmlFor="playlistName" className="block font-medium pt-2 text-gray-700 text-left">
+          <label htmlFor="name" className="block font-medium pt-2 text-gray-700 text-left">
            Playlist Name
           </label>
           <input
@@ -67,15 +72,15 @@ const AddToPlaylist = ({ onCreatePlaylist }) => {
             id="playlistName"
             className="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-500"
             placeholder="Enter playlist name"
-            value={playlistName}
-            onChange={handleInputChange}
+            {...register("name", { required: true })}
           />
         </div>
         <button
           type="submit"
-          className="bg-indigo-500 text-white py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300"
+          disabled={status === 'loading'}
+          className={`bg-indigo-500 ${(status === 'loading') ? 'opacity-70 cursor-not-allowed' : ''} text-white py-2 px-4 rounded-md hover:bg-indigo-600 transition duration-300`}
         >
-          Create new playlist
+          {status === 'loading'? 'Creating...' : 'Create new playlist'}
         </button>
       </form>
     </div>

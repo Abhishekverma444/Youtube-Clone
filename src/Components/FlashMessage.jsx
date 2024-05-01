@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const FlashMessage = ({ message, duration = 2000 }) => {
+const FlashMessage = ({ message, duration = 3000 }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {

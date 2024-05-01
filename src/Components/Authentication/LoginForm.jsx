@@ -31,8 +31,10 @@ const LoginForm = () => {
             });
             // console.log(response);
             console.log('Success:', response.data);
+
             localStorage.setItem('accessToken', response.data.data.accessToken)
             localStorage.setItem('refreshToken', response.data.data.refreshToken)
+            localStorage.setItem("userData", JSON.stringify(response.data.data.user))
 
             dispatch(
                 setUserData({
