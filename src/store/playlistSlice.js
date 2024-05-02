@@ -7,9 +7,9 @@ const initialState={
     playlistByPlaylistId: {},
     createdPlaylist: {},
     videoAddedToPlaylist: {},
-    removeVideoFromPlaylist: {},
-    deletePlaylist: {},
-    updatePlaylist: {},
+    videoRemovedFromPlaylist: {},
+    deletedPlaylist: {},
+    updatedPlaylist: {},
     status: 'idle',
     error: null,
 }
@@ -35,7 +35,7 @@ export const createPlaylist = createAsyncThunk('playlist/createPlaylist', async 
 })
 
 export const fetchUserPlaylists = createAsyncThunk('playlist/fetchUserPlaylists', async (userId) => {
-    console.log(userId);
+    // console.log(userId);
     const url = API_URL+`/playlist/user/${userId}`;
     try {
         const response = await axios.get(url,
@@ -68,7 +68,8 @@ export const fetchPlaylistById = createAsyncThunk('playlist/fetchPlaylistById', 
     }
 })
 
-export const addVideoToPlaylist = createAsyncThunk('playlist/addVideoToPlaylist', async (videoId, playlistId) => {
+export const addVideoToPlaylist = createAsyncThunk('playlist/addVideoToPlaylist', async ({videoId, playlistId}, {getState}) => {
+    // console.log("from playlist",videoId,playlistId);
     const url = API_URL+`/playlist/add/${videoId}/${playlistId}`;
     try {
         const response = await axios.patch(url, 
@@ -85,7 +86,8 @@ export const addVideoToPlaylist = createAsyncThunk('playlist/addVideoToPlaylist'
     }
 })
 
-export const removeVideoFromPlaylist = createAsyncThunk('playlist/removeVideoFromPlaylist', async (videoId, playlistId ) => {
+export const removeVideoFromPlaylist = createAsyncThunk('playlist/removeVideoFromPlaylist', async ({videoId, playlistId}, {getState} ) => {
+    // console.log("from remove playlist",videoId,playlistId);
     const url = API_URL+`/playlist/remove/${videoId}/${playlistId}`;
     try {
         const response = await axios.patch(url, 
@@ -95,7 +97,7 @@ export const removeVideoFromPlaylist = createAsyncThunk('playlist/removeVideoFro
                     'Authorization': `Bearer ${accessToken}`
                 }
             });
-        // console.log(response);
+        // console.log('removeRes',response.data.data);
         return response.data.data;
     } catch (error) {
         throw new Error('Failed to remove video from playlist');
@@ -118,7 +120,7 @@ export const deletePlaylist = createAsyncThunk('playlist/deletePlaylist', async 
     }
 })
 
-export const updatePlaylist = createAsyncThunk('playlist/updatePlaylist', async ( playlistId, formData ) => {
+export const updatePlaylist = createAsyncThunk('playlist/updatePlaylist', async ( {playlistId, formData}, {getState} ) => {
     const url = API_URL+`/playlist/${playlistId}`;
     try {
         const response = await axios.patch(url, 
@@ -199,7 +201,7 @@ const playlistSlice = createSlice({
                 state.status = 'loading';
             })
             .addCase(removeVideoFromPlaylist.fulfilled, (state, action) => {
-                state.removeVideoFromPlaylist = action.payload;
+                state.videoRemovedFromPlaylist = action.payload;
                 state.status = 'succeeded';
             })
             .addCase(removeVideoFromPlaylist.rejected, (state, action) => {
@@ -235,6 +237,6 @@ const playlistSlice = createSlice({
     }
 });
 
-export const { } = playlistSlice.actions;
+export const { updateVideoAddedToPlaylist, updateVideoRemovedFromPlaylist } = playlistSlice.actions;
 
 export default playlistSlice.reducer;

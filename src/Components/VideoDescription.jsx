@@ -138,7 +138,7 @@ const VideoDescription = ({ video }) => {
                     <img src={folder} alt="" className="h-6 w-6" />
                     Save
                 </button>
-                <AddToPlaylist showPlaylist={showPlaylist} />
+                <AddToPlaylist showPlaylist={showPlaylist} videoId={video?._id} />
                 </div>
             </div>
 
