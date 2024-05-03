@@ -5,6 +5,7 @@ import flashMsgSlice from "./flashMsgSlice";
 import videoSlice from './videoSlice'
 import userSlice from "./userSlice";
 import playlistSlice from "./playlistSlice";
+import commentSlice from './commentSlice'
 
 const store = configureStore({
     reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
         videos: videoSlice,
         user: userSlice,
         playlist: playlistSlice,
+        comment: commentSlice,
     }
 })
 

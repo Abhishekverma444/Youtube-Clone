@@ -19,6 +19,7 @@ const AddToPlaylist = ({ showPlaylist, videoId }) => {
   useEffect(() => {
     dispatch(fetchUserPlaylists(userData._id))
     // console.log('userPlaylists', userPlaylists);
+    createdPlaylist._id && dispatch(setFlashMessage({ "message": createdPlaylist.name + ' playlist created successfully' }))
   }, [dispatch, createdPlaylist])
 
   const onSubmit = (data) => {

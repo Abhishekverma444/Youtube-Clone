@@ -32,8 +32,13 @@ const LoginForm = () => {
             // console.log(response);
             console.log('Success:', response.data);
 
+            localStorage.removeItem('accessToken');
             localStorage.setItem('accessToken', response.data.data.accessToken)
+
+            localStorage.removeItem('refreshToken');
             localStorage.setItem('refreshToken', response.data.data.refreshToken)
+            
+            localStorage.removeItem('userData');
             localStorage.setItem("userData", JSON.stringify(response.data.data.user))
 
             dispatch(

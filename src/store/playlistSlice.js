@@ -15,6 +15,7 @@ const initialState={
 }
 
 const accessToken = localStorage.getItem('accessToken')
+// console.log("accessToken", accessToken);
 
 export const createPlaylist = createAsyncThunk('playlist/createPlaylist', async (formData) => {
     // name: , description: 

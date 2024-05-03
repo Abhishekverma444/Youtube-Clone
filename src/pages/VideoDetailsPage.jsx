@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSelector } from 'react-redux';
-import { VideoList , VideoDescription} from '../Components';
+import { VideoList , VideoDescription, VideoComment} from '../Components';
 import { Link } from 'react-router-dom';
 
 const VideoDetailsPage = () => {
@@ -33,6 +33,7 @@ const VideoDetailsPage = () => {
       </div>
 
       <VideoDescription video={video}/>
+      <VideoComment video={video}/>
     
     </div>
     <div className={`flex flex-col w-[40%] h-[20%] px-5 bg-yellow-400 `}>
