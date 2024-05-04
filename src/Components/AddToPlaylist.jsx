@@ -20,7 +20,7 @@ const AddToPlaylist = ({ showPlaylist, videoId }) => {
     dispatch(fetchUserPlaylists(userData._id))
     // console.log('userPlaylists', userPlaylists);
     createdPlaylist._id && dispatch(setFlashMessage({ "message": createdPlaylist.name + ' playlist created successfully' }))
-  }, [dispatch, createdPlaylist])
+  }, [dispatch, createdPlaylist._id])
 
   const onSubmit = (data) => {
     dispatch(createPlaylist(data))
@@ -47,7 +47,7 @@ const AddToPlaylist = ({ showPlaylist, videoId }) => {
 
 
   return showPlaylist && (
-    <div className="max-w-md absolute overflow-visible z-30 mx-auto mt-12 border-2 border-[#c5ad14] p-6 bg-[#f0d318] shadow-md rounded-md">
+    <div className="max-w-md absolute overflow-visible z-10 mx-auto mt-12 border-2 border-[#c5ad14] p-6 bg-[#f0d318] shadow-md rounded-md">
       <h2 className="text-lg font-semibold mb-4">Save to playlist</h2>
 
       <div className="max-w-md mx-auto ">

@@ -69,9 +69,7 @@ const VideoListingPage = () => {
           {videoRes[0]?.videos && videoRes[0]?.videos.map((video, index) => (
             <Link key={video._id}  to={"/videos/" + video._id} >
               <VideoCard video={video}/>
-
             </Link>
-        
           ))}
         </div>
       )}

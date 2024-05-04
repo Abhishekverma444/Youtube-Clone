@@ -77,7 +77,7 @@ const Header = () => {
     }
 
     return (
-        <div className=' bg bg-[#FFD700] flex justify-between p-4 fixed top-0 left-0 w-full z-20'
+        <div className=' bg bg-[#FFD700] overflow-hidden flex justify-between p-4 fixed top-0 left-0 w-full z-20'
         >
             <div className='flex flex-row items-center'>
                 <img

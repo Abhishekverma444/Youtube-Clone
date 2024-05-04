@@ -10,6 +10,8 @@ import subscriber from './subscriber.png'
 import vid_rec from './vid_rec.png'
 import home from './home.png'
 import dislike from './dislike.png'
+import video from './video.png'
+import tweet from './tweet.png'
 
 export {
     user,
@@ -23,5 +25,7 @@ export {
     subscriber,
     vid_rec,
     home,
-    dislike
+    dislike,
+    video,
+    tweet
 }

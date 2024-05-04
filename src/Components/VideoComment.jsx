@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import { getVideoComments, addComment } from '../store/commentSlice'
 import { useDispatch, useSelector } from 'react-redux';
 import { setFlashMessage } from '../store/flashMsgSlice'
+import dateFormat, { masks } from "dateformat";
 
 const VideoComment = ({ video }) => {
 
@@ -16,7 +17,7 @@ const VideoComment = ({ video }) => {
   useEffect(()=>{
     dispatch(getVideoComments({videoId: video?._id, limit: 10, page: page }));
     commentAdded._id && dispatch(setFlashMessage({'message': 'Comment added successfully'}))
-  },[dispatch, video?._id, commentAdded, page])
+  },[dispatch, video?._id, commentAdded._id, page])
   // console.log("videoComments", videoComments);
 
   const onSubmit = (data) => {
@@ -24,7 +25,7 @@ const VideoComment = ({ video }) => {
     dispatch(addComment({videoId: video?._id, content: data}))
   }
 
-  console.log(page);
+  // console.log(page);
 
   return (
     <div className="bg-[#fdde2e] p-5 rounded-lg shadow-md mt-4 mb-8 ">
@@ -53,10 +54,10 @@ const VideoComment = ({ video }) => {
       {/* Comments List */}
       <div>
         {videoComments[0]?.comments.map((comment) => (
-          <div key={comment._id} className="flex items-start border-t-2 gap-3 border-yellow-400 py-3 mb-2">
-          <img src={comment.avatar} alt="" className="w-10 h-10 rounded-full mt-2 border-2 object-cover" style={{ alignSelf: 'flex-start' }} />
-          <div>
-            <div className="font-medium text-gray-800">{comment.fullname} • 17 hours ago</div>
+          <div key={comment._id} className="flex  items-start border-t-2 gap-3 border-yellow-400 py-3 mb-2">
+          <img src={comment.avatar} alt="" className="w-14 h-14 absolute rounded-full mt-2 border-2 object-cover" style={{ alignSelf: 'flex-start' }} />
+          <div className='ml-16'>
+            <div className="font-medium text-gray-800">{comment.fullname} • {dateFormat(comment?.createdAt, 'mmmm dd, yyyy')}</div>
             <div className="font-normal text-gray-700">@{comment.username}</div>
             <p className='mt-2'>
               {comment.content}
