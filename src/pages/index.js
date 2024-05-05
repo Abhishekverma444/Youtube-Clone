@@ -5,6 +5,7 @@ import VideoDetailsPage from "./VideoDetailsPage";
 import ChannelPage from "./ChannelPage";
 import ChannelEmptyPage from "./ChannelEmptyPage";
 import ChannelPlaylistVideoPage from "./ChannelPlaylistVideoPage";
+import MyChannelPage from "./MyChannelPage";
 
 export {
     EmptyPage,
@@ -13,5 +14,6 @@ export {
     VideoDetailsPage,
     ChannelPage,
     ChannelEmptyPage,
-    ChannelPlaylistVideoPage
+    ChannelPlaylistVideoPage,
+    MyChannelPage,
 }

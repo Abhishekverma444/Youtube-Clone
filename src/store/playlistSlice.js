@@ -122,6 +122,7 @@ export const deletePlaylist = createAsyncThunk('playlist/deletePlaylist', async 
 })
 
 export const updatePlaylist = createAsyncThunk('playlist/updatePlaylist', async ( {playlistId, formData}, {getState} ) => {
+    // console.log(formData);
     const url = API_URL+`/playlist/${playlistId}`;
     try {
         const response = await axios.patch(url, 

@@ -4,13 +4,18 @@ import { Button } from '../index'
 import { useDispatch, useSelector } from 'react-redux';
 import { cacheResults } from '../../store/searchSlice';
 import { toggle } from '../../store/toggleSlice'
-import { YOUTUBE_SEARCH_API } from '../../utils/constants'
+import { API_URL, YOUTUBE_SEARCH_API } from '../../utils/constants'
 import { Link } from 'react-router-dom';
+import { setFlashMessage } from '../../store/flashMsgSlice';
+import axios from 'axios';
 
 const Header = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [suggestions, setSuggestions] = useState([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
+    const userData = JSON.parse(localStorage.getItem('userData'));
+    const accessToken = localStorage.getItem('accessToken')
+
 
     const searchCache = useSelector((store) => store.search); //subscribing the cache
 
@@ -34,7 +39,7 @@ const Header = () => {
     }, [searchQuery])
 
     const dispatch = useDispatch();
- 
+
     const getSearchSuggestions = async () => {
         console.log("API CALL : " + searchQuery);
         const data = await fetch(YOUTUBE_SEARCH_API + searchQuery);
@@ -74,6 +79,25 @@ const Header = () => {
                 ['searchQuery']: searchQuery,
             })
         )
+    }
+
+    const handleLogout = async () => {
+        const response = await axios.post(API_URL + '/users/logout', {}, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            }
+        })
+        if (response?.data?.message) {
+            console.log(response?.data?.message);
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+            localStorage.removeItem('userData');
+            dispatch(setFlashMessage({ "message": response?.data?.message }))
+        }
+    }
+
+    const handleLogoutOnClick = () => {
+        dispatch(setFlashMessage({ "message": "Dual click to Logout!" }))
     }
 
     return (
@@ -136,27 +160,33 @@ const Header = () => {
             </div>
 
             <div className='flex items-center'>
-                {/* <img
-                    className='h-14 w-14 rounded-full border-2 border-blue-600 p-1 transition duration-300 ease-in-out transform hover:scale-105'
-                    src={user}
-                    alt="user"
-                />
-
-                <Button class="bg-gradient-to-r from-[#9e1818] to-red-700 hover:from-red-600 hover:to-red-900 text-white font-bold py-3 px-5 rounded-full m-2 shadow-lg transform transition-transform hover:scale-105">
+                {userData && <Button
+                    onDoubleClick={handleLogout}
+                    onClick={handleLogoutOnClick}
+                    class="bg-gradient-to-r from-[#e61616] to-red-600 hover:from-red-500 hover:to-red-700 text-white font-bold py-3 px-5 rounded-full m-2 shadow-lg transform transition-transform hover:scale-105 select-none"
+                >
                     Logout
-                </Button> */}
+                </Button>}
+                {userData && <Link to='/myChannel'>
+                    <img
+                        className='h-16 w-16 rounded-full border-2 border-yellow-200 p- transition duration-300 ease-in-out transform hover:scale-105 object-cover'
+                        src={userData.avatar}
+                        alt="user"
+                    />
+                </Link>}
 
                 {/* agar user login nhi hai to. */}
-                <Link to="/login">
+                {!userData && <Link to="/login">
                     <Button className="bg-gradient-to-r from-[#026504] to-green-700 hover:from-green-700 hover:to-green-900 text-white font-bold py-3 px-6 rounded-full m-2 shadow-lg transform transition-transform hover:scale-105">
                         Login
                     </Button>
-                </Link>
-                <Link to='/signup'>
+                </Link>}
+
+                {!userData && <Link to='/signup'>
                     <button className="bg-gradient-to-r from-[#26249f] to-blue-700 hover:from-blue-700 hover:to-blue-900 text-white font-bold py-3 px-6 rounded-full m-2 shadow-lg transform transition-transform hover:scale-105">
                         Signup
                     </button>
-                </Link>
+                </Link>}
 
 
             </div>

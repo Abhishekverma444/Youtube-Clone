@@ -11,7 +11,7 @@ const PlaylistCard = ({playlist}) => {
         <div className={` ${toggle.status ? 'w-[450px]' : 'w-[375px]'}  m-2 pb-3 bg-[#fdde2e] cursor-pointer shadow-lg border border-yellow-500 overflow-hidden mx-2 my-4  select-none`} >
             <img src={video} alt='' className="w-full h-48 object-contain contrast-200  bg-stone-300" />
 
-            <div className={`${toggle.status ? 'w-[35.3%]' : 'w-[29.4%]'} absolute`}>
+            <div className={`${toggle.status ? 'w-[35.5%]' : 'w-[29.6%]'} absolute`}>
                 <div className='flex justify-between relative -top-[68px] shadow-sm bg-gray-200 opacity-80  px-3 py-2 border-t-2 border-white  items-center'>
                     <div>
                         <h1 className='text-xl font-medium contrast-200'>Playlist</h1>
