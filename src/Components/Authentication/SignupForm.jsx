@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { setFlashMessage } from "../../store/flashMsgSlice";
 import { useDispatch } from "react-redux";
+import { API_URL } from "../../utils/constants";
 
 const SignupForm = () => {
     const { handleSubmit, register } = useForm();
@@ -26,7 +27,7 @@ const SignupForm = () => {
             formDataToSend.append('avatar', formData.avatar[0]);
             formDataToSend.append('coverImage', formData.coverImage[0]);
             
-            const response = await axios.post('http://localhost:8000/api/v1/users/register', formDataToSend, {
+            const response = await axios.post(API_URL+'/users/register', formDataToSend, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 },

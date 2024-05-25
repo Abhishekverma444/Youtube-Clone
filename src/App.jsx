@@ -1,7 +1,13 @@
 import './App.css'
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Header, Sidebar, LoginForm, SignupForm, Users } from './Components/index'
-import { EmptyPage, HomePage, VideoListingPage, MyChannelPage, VideoDetailsPage, ChannelPage, ChannelPlaylistVideoPage } from './pages/index'
+import {
+  EmptyPage, HomePage, VideoListingPage, MyChannelPage, MyChannelVideoPage,
+  MyChannelPlaylistPage,
+  MyChannelTweetPage,
+  MyChannelChannelSubscribedPage, VideoDetailsPage,
+  ChannelPage, ChannelPlaylistVideoPage
+} from './pages/index'
 
 
 const appRouter = createBrowserRouter([{
@@ -26,15 +32,33 @@ const appRouter = createBrowserRouter([{
     },
     {
       path: '/channel',
-      element: <ChannelPage/>,
+      element: <ChannelPage />,
     },
     {
       path: '/channel/playlist/:playlistId',
-      element: <ChannelPlaylistVideoPage/>,
+      element: <ChannelPlaylistVideoPage />,
     },
     {
       path: '/myChannel',
-      element: <MyChannelPage />
+      element: <MyChannelPage />,
+      children: [
+        {
+          path: '/myChannel',
+          element: <MyChannelVideoPage />
+        },
+        {
+          path: '/myChannel/playlist',
+          element:<MyChannelPlaylistPage/>
+        },
+        {
+          path: '/myChannel/tweet',
+          element:<MyChannelTweetPage/>
+        },
+        {
+          path: '/myChannel/subscribed',
+          element:<MyChannelChannelSubscribedPage/>
+        }
+      ]
     }
   ]
 }])

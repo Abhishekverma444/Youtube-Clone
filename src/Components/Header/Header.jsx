@@ -93,6 +93,7 @@ const Header = () => {
             localStorage.removeItem('refreshToken');
             localStorage.removeItem('userData');
             dispatch(setFlashMessage({ "message": response?.data?.message }))
+            window.location.href = '/login';
         }
     }
 

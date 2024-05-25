@@ -15,7 +15,9 @@ const VideoComment = ({ video }) => {
   const dispatch = useDispatch();
 
   useEffect(()=>{
-    dispatch(getVideoComments({videoId: video?._id, limit: 10, page: page }));
+    if(video?._id){
+      dispatch(getVideoComments({videoId: video?._id, limit: 10, page: page }));
+    }
     commentAdded._id && dispatch(setFlashMessage({'message': 'Comment added successfully'}))
   },[dispatch, video?._id, commentAdded._id, page])
   // console.log("videoComments", videoComments);

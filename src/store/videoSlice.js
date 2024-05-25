@@ -9,7 +9,7 @@ const initialState = {
     query: '',
     userId: '',
     page: 1,
-    limit: 10,
+    limit: 9,
     status: 'idle',
     error: null,
 }

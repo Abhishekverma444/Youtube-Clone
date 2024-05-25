@@ -47,28 +47,29 @@ const VideoListingPage = () => {
   return (
     <div className='w-full m-0 p-0 bg bg-yellow-300'>
       {status === 'loading' && (
-        <div className='w-screen h-screen bg-yellow-300 flex justify-center items-center font-bold text-red-500 font-mono text-xl'>
+        <p className='w-screen h-screen bg-yellow-300 flex justify-center items-center font-bold text-red-500 font-mono text-xl'>
           Loading...
-        </div>
+        </p>
       )}
       {status === 'failed' && (
-        <div className='w-screen h-screen bg-yellow-300 flex justify-center items-center font-bold text-red-500 font-mono text-xl'>
-          Error: {error}
-        </div>
+        <p className="w-screen h-screen flex justify-center items-center bg-yellow-300 text-red-700 font-medium italic text-2xl">
+          <p className='w-96  text-center'>Login required or an error occurred. Please try again.</p>
+        </p>
       )}
+
       {status === 'succeeded' && searchQuery ? (
-        <div  className={`flex flex-col  px-5 mt-[7%] pt-4 ${toggle.status ? 'ml-[15%]' : 'ml-[6%]'} bg-yellow-400 `}>
+        <div className={`flex flex-col  px-5 mt-[7%] pt-4 ${toggle.status ? 'ml-[15%]' : 'ml-[6%]'} bg-yellow-400 `}>
           {videoRes[0]?.videos && videoRes[0]?.videos.map((video, index) => (
-            <Link key={video._id}  to={"/videos/" + video._id} >
+            <Link key={video._id} to={"/videos/" + video._id} >
               <VideoList video={video} />
             </Link>
           ))}
         </div>
-      ): (
+      ) : (
         <div className={`flex flex-wrap justify-evenly px-5 mt-[7%] pt-4 ${toggle.status ? 'ml-[15%]' : 'ml-[6%]'} bg-yellow-400 `}>
           {videoRes[0]?.videos && videoRes[0]?.videos.map((video, index) => (
-            <Link key={video._id}  to={"/videos/" + video._id} >
-              <VideoCard video={video}/>
+            <Link key={video._id} to={"/videos/" + video._id} >
+              <VideoCard video={video} />
             </Link>
           ))}
         </div>
@@ -78,7 +79,7 @@ const VideoListingPage = () => {
 
       <div className={`bg-yellow-400 ${toggle.status ? 'ml-[15%] w-[85%]' : 'ml-[6%] w-[94%]'} absolute`}>
         <div className='flex justify-center my-4'>
-        <button onClick={handlePrevPage} className='bg-blue-500 hover:bg-blue-700 text-white text-3xl font-bold py-2 px-4 rounded-lg mr-4'>
+          <button onClick={handlePrevPage} className='bg-blue-500 hover:bg-blue-700 text-white text-3xl font-bold py-2 px-4 rounded-lg mr-4'>
             {/* Left Arrow SVG */}
             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />

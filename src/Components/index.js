@@ -12,6 +12,7 @@ import AddToPlaylist from "./AddToPlaylist.jsx";
 import VideoComment from "./VideoComment.jsx";
 import ChannelTweets from "./ChannelTweets.jsx";
 import PlaylistCard from "./PlaylistCard.jsx";
+import UploadVideoPopup from './UploadVideoPopup.jsx'
 
 export {
     Button,
@@ -27,5 +28,6 @@ export {
     AddToPlaylist,
     VideoComment,
     ChannelTweets,
-    PlaylistCard
+    PlaylistCard,
+    UploadVideoPopup
 }
